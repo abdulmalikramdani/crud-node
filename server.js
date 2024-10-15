@@ -23,13 +23,20 @@ db.connect((err) => {
     console.log("Mysql Connected...")
 
     app.get("/", (req, res) => {
-        const sql_query = "SELECT * FROM books"
+
+        search = req.query.search
+        sql_query = "SELECT * FROM books"
+        if (search) {
+            sql_query = `SELECT * FROM books WHERE judul LIKE '%${search}%'`
+        }
+
         db.query(sql_query, (err, result) => {
             if (err) throw err
             console.log(result)
             const books = JSON.parse(JSON.stringify(result))
             res.render("index", { books: books, title: "Daftar Buku" })
         })
+
 
     })
     app.get("/delete/:id", (req, res) => {

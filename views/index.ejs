@@ -35,8 +35,16 @@
             <%= title %>
         </h1>
         <div class="card">
+            <div class="card-header">
+                <form action="">
+                    <p>Search : </p>
+                    <input type="text" name="search" id="search">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <a href="/" class="">Reset</a>
+            </div>
             <div class="card-body">
-                <table class="table">
+                <table class="table" id="table-data">
                     <thead>
                         <tr>
                             <th scope="col">NO</th>
