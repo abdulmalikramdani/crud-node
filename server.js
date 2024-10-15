@@ -59,6 +59,37 @@ db.connect((err) => {
               `);
         })
     })
+    app.get("/edit/:id", (req, res) => {
+
+        const id = req.params.id
+
+        const sql_query = `SELECT * FROM books WHERE id = ${id}`
+        db.query(sql_query, (err, result) => {
+            if (err) throw err
+            const book = JSON.parse(JSON.stringify(result))
+
+            console.log(book)
+
+            res.render("edit", { book: book[0], title: "Edit File" })
+        })
+    })
+
+    app.post('/update', (req, res) => {
+        const id = req.body.id
+        const judul = req.body.judul
+        const sinopsis = req.body.sinopsis
+        const halaman = req.body.halaman
+        const sql_query = `UPDATE books SET judul = '${judul}', sinopsis = '${sinopsis}', halaman = '${halaman}' WHERE id = ${id}`
+        db.query(sql_query, (err, result) => {
+            if (err) throw err
+            res.send(`
+                <script>
+                  alert('Data berhasil diupdate');
+                  window.location.href = "/"
+                </script>
+              `);
+        })
+    })
     app.listen(8000, () => {
         console.log("Server is running on port 8000")
 
